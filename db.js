@@ -24,15 +24,19 @@ function insertUser(user) {
     return user
 }
 
-function updateUser(id, user) {
+function updateUser(id, user, overwrite) {
     const users = findUsers()
     const index = users.findIndex(item => item.id === id)
 
     if (index === (-1)) return {}
 
-    for (let key in user) {
-        //Atualiza apenas as propriedades que vieram no JSON 
-        users[index][key] = user[key]
+    if (overwrite) {
+        users[index] = user
+    } else {
+        for (let key in user) {
+            //Atualiza apenas as propriedades que vieram no JSON 
+            users[index][key] = user[key]
+        }
     }
 
     fs.writeFileSync(FILE_PATH, JSON.stringify(users))
