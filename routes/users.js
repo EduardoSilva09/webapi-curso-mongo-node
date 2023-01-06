@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
   res.json(db.findUsers())
 });
 
+router.get('/:id', function(req, res, next) {
+  const id = req.params.id
+  res.json(db.findUser(id))
+});
+
 router.post('/', (req, res, next) => {
   const user = db.insertUser(req.body);
   res.status(201).json(user);
