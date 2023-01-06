@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../model/db')
+const db = require('../model/db');
+const userScheema = require('../model/userScheema');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -13,6 +14,11 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.post('/', (req, res, next) => {
+  const { error } = userScheema.validate(req.body)
+
+  if (error)
+    return res.status(422).json({ error: error.details })
+
   const user = db.insertUser(req.body);
   res.status(201).json(user);
 });

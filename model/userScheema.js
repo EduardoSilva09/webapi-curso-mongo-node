@@ -28,7 +28,7 @@ module.exports = Joi.object({
                         [
                             'com',
                             'net',
-                            '.com.br'
+                            'br'
                         ]
                 }
             })
