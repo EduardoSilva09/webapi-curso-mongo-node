@@ -4,11 +4,12 @@ const path = require('path')
 const FILE_PATH = path.join(__dirname, 'users.json')
 
 function findUsers() {
-    try {
-        return require('./users.json')
-    } catch (error) {
+    if (!fs.existsSync(FILE_PATH)) {
         return []
     }
+
+    const rawData = fs.readFileSync(FILE_PATH)
+    return JSON.parse(rawData)
 }
 
 function findUser(id) {
