@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../model/db');
-const userScheema = require('../model/userScheema');
+const validationUserMiddleware = require('../middlewares/validationMidleware')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -12,19 +12,6 @@ router.get('/:id', function (req, res, next) {
   const id = req.params.id
   res.json(db.findUser(id))
 });
-
-function validationUserMiddleware(req, res, next) {
-  if (["POST", "PUT"].indexOf(req.method) !== (-1)) {
-    if (!req.body.nome || !req.body.idade)
-      return res.status(422).json({ error: "nome and idade are required!" })
-  }
-  const { error } = userScheema.validate(req.body)
-
-  if (error)
-    return res.status(422).json({ error: error.details })
-
-  next()
-}
 
 router.post('/', validationUserMiddleware, (req, res, next) => {
   const user = db.insertUser(req.body);
