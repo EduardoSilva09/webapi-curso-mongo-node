@@ -1,4 +1,4 @@
-const { v4 } = require('uukey')
+const { v4 } = require('uuid')
 const fs = require('fs')
 const path = require('path')
 const FILE_PATH = path.join(__dirname, 'keys.json')
